@@ -1,14 +1,13 @@
 const express = require('express');
-const userService = require('../services/userService');
+const dietitianService = require('../services/dietitianService');
 const verifyToken = require('../middleware/verifyToken');
 const router = express.Router();
 
-// Define routes for user operations
-router.post('/userSignup', userService.createUser);
-router.post('/userLogin', userService.userLogin);
-// router.get("/getUsers", verifyToken, userService.getUsers);
-// router.get('/getUserById/:id', userService.getUserById);
-// router.put('/updateUser/:id', userService.updateUser);
-// router.delete('/deleteUser/:id', userService.deleteUser);
+// Define routes for dietitian operations
+router.post('/dietitianLogin', dietitianService.dietitianLogin);
+// router.get("/getDietitians", verifyToken, dietitianService.getDietitians);
+// router.get('/getDietitianById/:id', dietitianService.getDietitianById);
+// router.put('/updateDietitian/:id', dietitianService.updateDietitian);
+// router.delete('/deleteDietitian/:id', dietitianService.deleteDietitian);
 
 module.exports = router;
