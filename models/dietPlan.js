@@ -19,7 +19,7 @@ const DietPlan = sequelize.define('DietPlan', {
         defaultValue: false,
     },
 }, {
-    tableName: 'diet_Plan',
+    tableName: 'diet_plan',
     timestamps: true, // Adds createdAt and updatedAt fields
 });
 

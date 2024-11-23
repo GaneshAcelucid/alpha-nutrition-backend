@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config'); // Your Sequelize instance
 
-const Nutrition = sequelize.define('Nutrition', {
+const Item = sequelize.define('Item', {
     itemName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -35,8 +35,8 @@ const Nutrition = sequelize.define('Nutrition', {
         allowNull: true,
     },
 }, {
-    tableName: 'nutrition',
+    tableName: 'item',
     timestamps: true, // CreatedAt and UpdatedAt fields
 });
 
-module.exports = Nutrition;
+module.exports = Item;

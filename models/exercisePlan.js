@@ -19,7 +19,7 @@ const ExercisePlan = sequelize.define('ExercisePlan', {
         defaultValue: false,
     },
 }, {
-    tableName: 'exercise_plans',
+    tableName: 'exercise_plan',
     timestamps: true, // Adds createdAt and updatedAt fields
 });
 
