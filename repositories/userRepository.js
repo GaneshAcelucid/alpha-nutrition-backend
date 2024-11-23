@@ -39,7 +39,7 @@ class UserRepository {
           return res.status(400).send('Invalid credentials');
       }
       // Generate JWT token
-      const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
       return token;
     } catch (error) {
       throw new Error(`Error fetching users: ${error.message}`);
