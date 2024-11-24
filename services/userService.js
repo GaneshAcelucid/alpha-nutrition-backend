@@ -111,6 +111,19 @@ class userService {
           res.status(404).json({ error: error.message });
       }
   }
+
+
+  ///////////////////////////////////// Update Diet Plan completed //////////////////////////////////
+  // Update a DietPlanComplete
+  async updateDietPlanCompletedById(req, res) {
+    try {
+        const dietPlan = await userRepository.updateDietPlanCompletedById(req.params.id, req.body.userId);
+        res.status(200).json(dietPlan);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+  }
+
 }
 
 module.exports = new userService();

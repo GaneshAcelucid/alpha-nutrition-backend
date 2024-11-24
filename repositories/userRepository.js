@@ -2,6 +2,8 @@ const User = require('../models/user');
 const DailyProgress = require('../models/dailyProgress');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const DietPlan = require('../models/dietPlan');
+const Reward = require('../models/Reward');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -18,7 +20,7 @@ class UserRepository {
         password: hashedPassword,
         ...otherData,
       });
-      console.log(user);
+      await Reward.create({ userID: user.id, reward: 0 });
       return user;
     } catch (error) {
       throw new Error(`Error creating user: ${error.message}`);
@@ -153,6 +155,29 @@ class UserRepository {
       } catch (error) {
           throw new Error(`Error deleting dailyProgress: ${error.message}`);
       }
+  }
+
+  ///////////////////////////////////// Update Diet Plan completed //////////////////////////////////
+  // Update a DietPlanCompleted
+  async updateDietPlanCompletedById(id, userID) {
+    try {
+        const dietPlan = await DietPlan.findByPk(id);
+        const reward = await Reward.findOne({ where: { userID: userID } });
+
+        if (!dietPlan) {
+            throw new Error('DietPlan not found');
+        }
+        if (!reward) {
+            throw new Error('Reward not found for the user');
+        }
+
+        await dietPlan.update({ isCompleted: true });
+        await reward.update({ reward: reward.reward + 10 });
+
+        return { dietPlan, updatedReward: reward };
+    } catch (error) {
+        throw new Error(`Error updating DietPlan or Reward: ${error.message}`);
+    }
   }
 }
 
