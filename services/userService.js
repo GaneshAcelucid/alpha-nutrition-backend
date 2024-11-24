@@ -124,6 +124,16 @@ class userService {
     }
   }
 
+  // Update a ExercisePlanComplete
+  async updateExercisePlanCompletedById(req, res) {
+    try {
+        const exercisePlan = await userRepository.updateExercisePlanCompletedById(req.params.id, req.body.userId);
+        res.status(200).json(exercisePlan);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+  }
+
 }
 
 module.exports = new userService();

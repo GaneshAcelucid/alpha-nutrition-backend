@@ -3,6 +3,7 @@ const DailyProgress = require('../models/dailyProgress');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const DietPlan = require('../models/dietPlan');
+const ExercisePlan = require('../models/exercisePlan');
 const Reward = require('../models/Reward');
 require('dotenv').config();
 
@@ -177,6 +178,27 @@ class UserRepository {
         return { dietPlan, updatedReward: reward };
     } catch (error) {
         throw new Error(`Error updating DietPlan or Reward: ${error.message}`);
+    }
+  }
+
+  async updateExercisePlanCompletedById(id, userID) {
+    try {
+        const exercisePlan = await ExercisePlan.findByPk(id);
+        const reward = await Reward.findOne({ where: { userID: userID } });
+
+        if (!exercisePlan) {
+            throw new Error('ExercisePlan not found');
+        }
+        if (!reward) {
+            throw new Error('Reward not found for the user');
+        }
+
+        await exercisePlan.update({ isCompleted: true });
+        await reward.update({ reward: reward.reward + 5 });
+
+        return { exercisePlan, updatedReward: reward };
+    } catch (error) {
+        throw new Error(`Error updating ExercisePlan or Reward: ${error.message}`);
     }
   }
 }
