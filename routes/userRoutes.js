@@ -11,4 +11,12 @@ router.get('/getUserById/:id', verifyToken, userService.getUserById);
 router.put('/updateUser/:id', verifyToken, userService.updateUser);
 router.delete('/deleteUser/:id', verifyToken, userService.deleteUser);
 
+///////////////////////////////////// Daily Progress //////////////////////////////////
+router.post("/createDailyProgress", verifyToken, userService.createDailyProgress);
+router.get("/getAllDailyProgress", verifyToken, userService.getAllDailyProgress);
+router.get("/getDailyProgressById/:id", verifyToken, userService.getDailyProgressById);
+router.put("/updateDailyProgressById/:id", verifyToken, userService.updateDailyProgressById);
+router.delete("/deleteDailyProgressById/:id", verifyToken, userService.deleteDailyProgressById);
+
+
 module.exports = router;

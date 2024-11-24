@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const DailyProgress = require('../models/dailyProgress');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -91,6 +92,67 @@ class UserRepository {
     } catch (error) {
       throw new Error(`Error deleting user: ${error.message}`);
     }
+  }
+
+  ///////////////////////////////////// DailyProgress //////////////////////////////////
+  // Create a new DailyProgress
+  async createDailyProgress(data) {
+      try {
+          const dailyProgress = await DailyProgress.create(data);
+          console.log(dailyProgress);
+          return dailyProgress;
+      } catch (error) {
+          throw new Error(`Error creating dailyProgress: ${error.message}`);
+      }
+  }
+
+  // Get all dailyProgresss
+  async getAllDailyProgresss() {
+      try {
+          const dailyProgresss = await DailyProgress.findAll();
+          return dailyProgresss;
+      } catch (error) {
+          throw new Error(`Error fetching dailyProgresss: ${error.message}`);
+      }
+  }
+  
+  // Get a dailyProgress by ID
+  async getDailyProgressById(id) {
+      try {
+          const dailyProgress = await DailyProgress.findByPk(id);
+          if (dailyProgress) return dailyProgress;
+          else throw new Error('DailyProgress not found');
+      } catch (error) {
+          throw new Error(`Error fetching dailyProgress by ID: ${error.message}`);
+      }
+  }
+  
+  // Update a dailyProgress
+  async updateDailyProgressById(id, data) {
+      try {
+          const dailyProgress = await DailyProgress.findByPk(id);
+          if (dailyProgress) {
+          await dailyProgress.update(data);
+          return dailyProgress;
+          } else throw new Error('DailyProgress not found');
+      } catch (error) {
+          throw new Error(`Error updating dailyProgress: ${error.message}`);
+      }
+  }
+  
+  // Delete a dailyProgress
+  async deleteDailyProgressById(id) {
+      try {
+          console.log(id);
+          const dailyProgress = await DailyProgress.findByPk(id);
+          if (dailyProgress) {
+              console.log(dailyProgress)
+              await dailyProgress.destroy();
+              return { message: 'DailyProgress deleted' };
+          } else throw new Error('DailyProgress not found');
+      } catch (error) {
+          throw new Error(`Error deleting dailyProgress: ${error.message}`);
+      }
   }
 }
 
