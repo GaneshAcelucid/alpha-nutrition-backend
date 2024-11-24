@@ -1,10 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');  // Import CORS middleware
 const sequelize = require('./config');  // Your Sequelize instance
 const userRoutes = require('./routes/userRoutes');
 const dietitianRoutes = require('./routes/dietitianRoutes');
 
 const app = express();
+
+// Allow all CORS requests
+app.use(cors());
+
 app.use(bodyParser.json());
 
 // Use user routes
