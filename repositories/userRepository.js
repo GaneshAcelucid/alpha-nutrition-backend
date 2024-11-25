@@ -3,6 +3,7 @@ const DailyProgress = require('../models/dailyProgress');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const DietPlan = require('../models/dietPlan');
+const Item = require('../models/item');
 const ExercisePlan = require('../models/exercisePlan');
 const Reward = require('../models/Reward');
 require('dotenv').config();
@@ -201,6 +202,34 @@ class UserRepository {
         throw new Error(`Error updating ExercisePlan or Reward: ${error.message}`);
     }
   }
+
+  ///////////////////////////////////// Get Diet Plan By UserId //////////////////////////////////
+  async getDietPlanByUserId(id) {
+    try {
+      const dietPlans = await DietPlan.findAll({ where: { userID: id } });
+
+      if (dietPlans.length === 0) {
+          throw new Error('No diet plan found for this user.');
+      }
+
+      const itemIds = dietPlans.map(plan => plan.itemID);
+      const items = await Item.findAll({ where: { id: itemIds } });
+
+      // Combine diet plans with items
+      const combinedData = dietPlans.map(plan => {
+          const item = items.find(item => item.id === plan.itemID);
+          return {
+              ...plan.dataValues,
+              item: item ? item.dataValues : null,
+          };
+      });
+
+      return combinedData;
+    } catch (error) {
+        throw new Error(`Error fetching diet plan and item: ${error.message}`);
+    }
+  }
+
 }
 
 module.exports = UserRepository;

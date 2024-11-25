@@ -134,6 +134,16 @@ class userService {
     }
   }
 
+  ///////////////////////////////////// Get Diet Plan By UserId //////////////////////////////////
+  async getDietPlanByUserId(req, res) {
+    try {
+        const dietPlan = await userRepository.getDietPlanByUserId(req.body.userId);
+        res.status(200).json(dietPlan);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+  }
+
 }
 
 module.exports = new userService();
