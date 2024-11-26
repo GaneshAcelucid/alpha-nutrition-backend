@@ -7,7 +7,7 @@ const Item = sequelize.define('Item', {
         allowNull: false,
     },
     portionSizeNumber: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
     },
     portionQuantity: {

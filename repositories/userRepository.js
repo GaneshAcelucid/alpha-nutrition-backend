@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const DietPlan = require('../models/dietPlan');
 const Item = require('../models/item');
+const Exercise = require('../models/exercise');
 const ExercisePlan = require('../models/exercisePlan');
 const Reward = require('../models/Reward');
 require('dotenv').config();
@@ -203,7 +204,7 @@ class UserRepository {
     }
   }
 
-  ///////////////////////////////////// Get Diet Plan By UserId //////////////////////////////////
+  ///////////////////////////////////// Get Diet and Exercise Plan By UserId //////////////////////////////////
   async getDietPlanByUserId(id) {
     try {
       const dietPlans = await DietPlan.findAll({ where: { userID: id } });
@@ -218,6 +219,32 @@ class UserRepository {
       // Combine diet plans with items
       const combinedData = dietPlans.map(plan => {
           const item = items.find(item => item.id === plan.itemID);
+          return {
+              ...plan.dataValues,
+              item: item ? item.dataValues : null,
+          };
+      });
+
+      return combinedData;
+    } catch (error) {
+        throw new Error(`Error fetching diet plan and item: ${error.message}`);
+    }
+  }
+
+  async getExercisePlanByUserId(id) {
+    try {
+      const exercisePlans = await ExercisePlan.findAll({ where: { userID: id } });
+
+      if (exercisePlans.length === 0) {
+          throw new Error('No diet plan found for this user.');
+      }
+
+      const itemIds = exercisePlans.map(plan => plan.exerciseID);
+      const items = await Exercise.findAll({ where: { id: itemIds } });
+
+      // Combine diet plans with items
+      const combinedData = exercisePlans.map(plan => {
+          const item = items.find(item => item.id === plan.exerciseID);
           return {
               ...plan.dataValues,
               item: item ? item.dataValues : null,

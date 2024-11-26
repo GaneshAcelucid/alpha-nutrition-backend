@@ -22,8 +22,9 @@ router.delete("/deleteDailyProgressById/:id", verifyToken, userService.deleteDai
 router.put("/updateDietPlanCompletedById/:id", verifyToken, userService.updateDietPlanCompletedById);
 router.put("/updateExercisePlanCompletedById/:id", verifyToken, userService.updateExercisePlanCompletedById);
 
-///////////////////////////////////// Get Diet Plan By UserId //////////////////////////////////
+///////////////////////////////////// Get Diet and Exercise Plan By UserId //////////////////////////////////
 router.post("/getDietPlanByUserId/", verifyToken, userService.getDietPlanByUserId);
+router.post("/getExercisePlanByUserId/", verifyToken, userService.getExercisePlanByUserId);
 
 
 module.exports = router;

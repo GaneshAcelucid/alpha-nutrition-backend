@@ -134,11 +134,20 @@ class userService {
     }
   }
 
-  ///////////////////////////////////// Get Diet Plan By UserId //////////////////////////////////
+  ///////////////////////////////////// Get Diet and Exercise Plan By UserId //////////////////////////////////
   async getDietPlanByUserId(req, res) {
     try {
         const dietPlan = await userRepository.getDietPlanByUserId(req.body.userId);
         res.status(200).json(dietPlan);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
+  }
+
+  async getExercisePlanByUserId(req, res) {
+    try {
+        const exercisePlan = await userRepository.getExercisePlanByUserId(req.body.userId);
+        res.status(200).json(exercisePlan);
     } catch (error) {
         res.status(404).json({ error: error.message });
     }
