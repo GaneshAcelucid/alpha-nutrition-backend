@@ -3,7 +3,7 @@ const Exercise = require('../models/exercise');
 const DietPlan = require('../models/dietPlan');
 const ExercisePlan = require('../models/exercisePlan');
 const Reward = require('../models/reward');
-const Feedback = require('../models/Feedback');
+const Feedback = require('../models/feedback');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
