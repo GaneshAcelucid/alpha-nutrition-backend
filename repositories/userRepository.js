@@ -6,7 +6,7 @@ const DietPlan = require('../models/dietPlan');
 const Item = require('../models/item');
 const Exercise = require('../models/exercise');
 const ExercisePlan = require('../models/exercisePlan');
-const Reward = require('../models/Reward');
+const Reward = require('../models/reward');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
